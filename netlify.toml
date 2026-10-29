@@ -1,0 +1,16 @@
+[build]
+  command = "node build.mjs"
+  publish = "dist"
+[build.environment]
+  NODE_VERSION = "20"
+[functions]
+  directory = "netlify/functions"
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
