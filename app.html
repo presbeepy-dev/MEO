@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2b2118">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icon-192.png">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<title>make.easy.oeuvre — MEO</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Lora:wght@400;600&display=swap">
+<style>
+:root{--bg:#f7f1e6;--card:#fffaf0;--ink:#2b2118;--mut:#7a6a58;--acc:#a4532b;--line:#e3d6c0;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1c1611;--card:#262019;--ink:#f1e8d8;--mut:#a89883;--acc:#e08a5a;--line:#3a3128;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#1c1611;--card:#262019;--ink:#f1e8d8;--mut:#a89883;--acc:#e08a5a;--line:#3a3128;color-scheme:dark}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Lora,Georgia,serif}
+#intro{position:fixed;inset:0;z-index:50;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity .8s}
+#intro.off{opacity:0;pointer-events:none}
+.stage{position:relative;font-family:Caveat,cursive;font-size:min(30vw,170px);line-height:1.2}
+.stage .w{display:inline-block;clip-path:inset(0 100% 0 0);animation:rev 2.4s .6s cubic-bezier(.45,.1,.4,1) forwards}
+.stage .pen{position:absolute;left:0;bottom:.05em;width:.5em;height:.5em;animation:mv 2.4s .6s cubic-bezier(.45,.1,.4,1) forwards,wob .3s .6s 8 alternate ease-in-out;opacity:0}
+.stage .ul{position:absolute;left:0;right:0;bottom:.12em;height:3px;background:var(--acc);transform:scaleX(0);transform-origin:left;animation:ul .6s 3s forwards}
+.sub{font-family:Caveat,cursive;font-size:1.6rem;color:var(--mut);opacity:0;animation:fi .8s 3.3s forwards}
+@keyframes rev{to{clip-path:inset(0 0 0 0)}}@keyframes mv{0%{left:0;opacity:1}98%{opacity:1}100%{left:calc(100% - .1em);opacity:0}}
+@keyframes wob{from{rotate:-4deg}to{rotate:4deg}}@keyframes ul{to{transform:scaleX(1)}}@keyframes fi{to{opacity:1}}
+header{display:flex;align-items:center;gap:.6rem;padding:.7rem 1rem;border-bottom:1px solid var(--line);position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:5}
+header h1{font-family:Caveat,cursive;font-size:1.6rem;margin:0;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+main{max-width:780px;margin:0 auto;padding:1rem}
+button,select,input,textarea{font:inherit;color:inherit}
+button{background:var(--acc);color:#fff;border:0;border-radius:10px;padding:.6rem 1rem;min-height:44px;cursor:pointer}
+button.g{background:transparent;color:var(--ink);border:1px solid var(--line)}
+input,select,textarea{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:.6rem .8rem;min-height:44px}
+.row{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin:.6rem 0}.row>input{flex:1;min-width:140px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1rem;margin:.6rem 0}
+.card h3{margin:0 0 .2rem}.m{color:var(--mut);font-size:.85rem}
+.sea{border-left:4px solid var(--acc);padding-left:.8rem;margin:1.4rem 0}
+.sea>.row>input{font-weight:600;font-size:1.1rem}
+textarea.ed{width:100%;min-height:50vh;font-size:1.05rem;line-height:1.7;resize:vertical}
+.book{line-height:1.8;text-align:justify}.book h2{font-family:Caveat,cursive;font-size:2.2rem;text-align:center;margin:3rem 0 1rem}
+.book h3{text-align:center;margin:2rem 0 1rem}.book p{margin:0 0 1em;text-indent:1.4em}
+.book.pg .sheet{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:1.4rem;margin:1rem 0}
+.sheet .n{text-align:center;color:var(--mut);font-size:.8rem}
+.tag{display:inline-block;padding:.1rem .55rem;border-radius:99px;border:1px solid var(--line);font-size:.78rem}
+</style>
+</head>
+<body>
+<div id="intro" role="img" aria-label="Un crayon écrit MEO">
+  <div class="stage"><span class="w">MEO</span><svg class="pen" viewBox="0 0 40 40" aria-hidden="true"><g transform="rotate(-40 20 20)"><rect x="17" y="2" width="8" height="24" rx="1" fill="#e0a526"/><rect x="17" y="2" width="8" height="5" fill="#d9534f"/><path d="M17 26h8l-4 10z" fill="#f1d9b0"/><path d="M19.4 32l1.6 4 1.6-4z" fill="#2b2118"/></g></svg><i class="ul"></i></div>
+  <div class="sub">make.easy.oeuvre</div>
+</div>
+<header><h1 id="ttl">MEO</h1><button class="g" id="bk" hidden>← Retour</button><button class="g" id="ins" hidden>📲 Installer</button><button class="g" id="th" aria-label="Thème">◐</button></header>
+<main id="app"></main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="/config.js"></script><script src="/bm.js"></script><script src="/reader.js"></script>
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const uid=()=>Math.random().toString(36).slice(2,9);
+const ST=['À écrire','En cours','Brouillon terminé','À relire','Validé','Publié'];
+const words=t=>(t.trim().match(/\S+/g)||[]).length;
+const cw=c=>c.pages.reduce((n,g)=>n+words(g.text),0);
+let S={projects:[],size:19};
+try{const r=localStorage.getItem('meo-v1');if(r)S=JSON.parse(r)}catch(e){}
+let view={v:'home'},undo=null,find='',mic=null,msg='',mode='cont';
+const dirty=new Set(),cfg=window.MEO_CONFIG||{};let sb=null,user=null,sync='Mode local',tm;
+if(cfg.SUPABASE_URL&&cfg.SUPABASE_ANON_KEY&&window.supabase){sb=supabase.createClient(cfg.SUPABASE_URL,cfg.SUPABASE_ANON_KEY);sync='Non connecté';
+  sb.auth.onAuthStateChange((_,s)=>{const u=s?.user||null;if(u&&(!user||user.id!==u.id)){user=u;pull()}else if(!u){user=null;sync='Non connecté'}if(view.v==='home'||view.v==='shared'){if(view.v==='shared')delete view.d;render()}})}
+function save(){try{localStorage.setItem('meo-v1',JSON.stringify(S))}catch(e){sync='⚠ Échec de l’enregistrement local'}
+  if(sb&&user){sync='Synchronisation…';clearTimeout(tm);tm=setTimeout(push,1200)}setSv()}
+function setSv(){const e=$('#sv');if(e)e.textContent=sync}
+function touch(p){p.updated=Date.now();dirty.add(p.id);save()}
+async function push(){try{for(const id of [...dirty]){const p=S.projects.find(x=>x.id===id);if(!p)continue;
+  const{error}=await sb.from('projects').upsert({id:p.id,name:p.name,data:{books:p.books,author:p.author||'',real:p.real||'',bio:p.bio||'',videos:p.videos||''},updated_at:new Date(p.updated).toISOString()});if(error)throw error;dirty.delete(id)}sync='☁ Synchronisé'}catch(e){sync='⚠ Sync échouée : '+(e.message||e)}setSv()}
+async function pull(){try{sync='Synchronisation…';const{data,error}=await sb.from('projects').select('*');if(error)throw error;
+  const ids=new Set(data.map(r=>r.id));
+  for(const r of data){const l=S.projects.find(p=>p.id===r.id),t=Date.parse(r.updated_at);
+    if(!l)S.projects.push({id:r.id,name:r.name,books:r.data.books||[],author:r.data.author||'',real:r.data.real||'',bio:r.data.bio||'',videos:r.data.videos||'',updated:t});
+    else if(t>l.updated&&!dirty.has(l.id)){l.name=r.name;l.books=r.data.books||[];l.author=r.data.author||'';l.real=r.data.real||'';l.bio=r.data.bio||'';l.videos=r.data.videos||'';l.updated=t}else if(l.updated>t)dirty.add(l.id)}
+  S.projects.forEach(p=>{if(!ids.has(p.id))dirty.add(p.id)});save();await push()}catch(e){sync='⚠ Sync échouée : '+(e.message||e)}render()}
+const P=()=>S.projects.find(p=>p.id===view.p),B=()=>P().books.find(b=>b.id===view.b);
+const findCh=()=>{for(const s of B().seasons){const c=s.chapters.find(c=>c.id===view.c);if(c)return c}};
+function endIntro(){$('#intro').classList.add('off')}
+$('#intro').onclick=endIntro;
+let dp=null;addEventListener('beforeinstallprompt',e=>{e.preventDefault();dp=e;$('#ins').hidden=false});$('#ins').onclick=async()=>{if(dp){dp.prompt();await dp.userChoice;dp=null;$('#ins').hidden=true}};addEventListener('appinstalled',()=>{$('#ins').hidden=true});setTimeout(endIntro,4800);
+$('#th').onclick=()=>{const r=document.documentElement;const d=r.dataset.theme==='dark'||(!r.dataset.theme&&matchMedia('(prefers-color-scheme:dark)').matches);r.dataset.theme=d?'light':'dark'};
+const back={edit:'book',read:'book',book:'proj',proj:'home'};
+$('#bk').onclick=()=>{if(mic)mic.stop();stopA();const v=back[view.v];go({...view,v})};
+function go(v){if(window.MEOBM)MEOBM.off();view=v;render();scrollTo(0,0)}
+const mv=(arr,id,d)=>{const i=arr.findIndex(x=>x.id===id),j=i+d;if(j<0||j>=arr.length)return;[arr[i],arr[j]]=[arr[j],arr[i]]};
+const two=(b,fn)=>{if(b.dataset.s){fn()}else{b.dataset.s=1;b.textContent='Confirmer'}};
+function render(){const a=$('#app');$('#bk').hidden=view.v==='home'||view.v==='shared';
+if(view.v==='home'){$('#ttl').textContent='make.easy.oeuvre';
+  let acc='';
+  if(!sb)acc=`<div class="card m">Mode local : vos données restent sur cet appareil. Renseignez <b>config.js</b> (Supabase) pour la synchronisation en ligne.</div>`;
+  else if(user)acc=`<div class="card"><span class="m">Connecté : ${esc(user.email)}</span> <div class="row"><span class="m" id="sv">${sync}</span><button class="g" id="lo">Déconnexion</button></div></div>`;
+  else acc=`<div class="card"><div class="row"><input id="em" type="email" placeholder="E-mail" autocomplete="email"><input id="pw" type="password" placeholder="Mot de passe (8 car. min.)" autocomplete="current-password"></div><div class="row"><button id="li">Connexion</button><button class="g" id="su">Créer un compte</button></div><div class="m" id="am">${esc(msg)}</div></div>`;
+  a.innerHTML=acc+`<div class="row"><input id="np" placeholder="Nom du nouveau projet"><button id="addp">Créer</button></div>`+
+  (S.projects.length?S.projects.map(p=>`<div class="card"><h3>${esc(p.name)}</h3><div class="m">${p.books.length} livre(s)</div><div class="row"><button data-o="${p.id}">Ouvrir</button><button class="g" data-d="${p.id}">Supprimer</button></div></div>`).join(''):`<p class="m">Aucun projet. Créez le premier.</p>`);
+  $('#addp').onclick=()=>{const n=$('#np').value.trim();if(!n)return;const p={id:crypto.randomUUID(),name:n,books:[],updated:Date.now()};S.projects.unshift(p);touch(p);render()};
+  a.querySelectorAll('[data-o]').forEach(b=>b.onclick=()=>go({v:'proj',p:b.dataset.o}));
+  a.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>two(b,async()=>{S.projects=S.projects.filter(p=>p.id!==b.dataset.d);save();if(sb&&user)await sb.from('projects').delete().eq('id',b.dataset.d);render()}));
+  if($('#lo'))$('#lo').onclick=async()=>{await sb.auth.signOut()};
+  const au=async(k)=>{const e=$('#em').value.trim(),p=$('#pw').value;if(!e||p.length<8){msg='E-mail et mot de passe (8 caractères min.) requis.';$('#am').textContent=msg;return}
+    const r=k?await sb.auth.signUp({email:e,password:p}):await sb.auth.signInWithPassword({email:e,password:p});
+    msg=r.error?r.error.message:(k&&!r.data.session?'Compte créé : confirmez votre e-mail, puis connectez-vous.':'');if(r.error||msg)$('#am').textContent=msg};
+  if($('#li')){$('#li').onclick=()=>au(0);$('#su').onclick=()=>au(1)}
+}
+if(view.v==='proj'){const p=P();$('#ttl').textContent=p.name;
+  a.innerHTML=`<div class="card"><h3>Auteur</h3><div class="row"><input id="au" placeholder="Nom d’artiste (obligatoire pour publier)" value="${esc(p.author||'')}" aria-label="Nom d’artiste"></div><div class="row"><input id="rn" placeholder="Vrai nom (facultatif, affiché publiquement si rempli)" value="${esc(p.real||'')}" aria-label="Vrai nom"></div><textarea id="bi" placeholder="Présentation de l’auteur (page publique)" style="width:100%;min-height:80px">${esc(p.bio||'')}</textarea></div><div class="card"><h3>Vidéos du site</h3><textarea id="vd" placeholder="Une vidéo par ligne : Titre | lien YouTube ou TikTok" style="width:100%;min-height:80px">${esc(p.videos||'')}</textarea><div class="m">Affichées sur l’accueil du site public après « Publier » puis « Mettre le site à jour ». Ce sont des liens : aucun fichier vidéo n’est hébergé.</div></div><div class="row"><input id="nb" placeholder="Titre du livre"><button id="addb">Créer le livre</button></div><div id="imp0"></div>`+
+  p.books.map(b=>`<div class="card"><h3>${esc(b.title)}</h3><div class="m">${b.seasons.length} saison(s) · ${b.seasons.reduce((n,s)=>n+s.chapters.length,0)} chapitre(s)</div><div class="row"><button data-o="${b.id}">Ouvrir</button><button class="g" data-x="${b.id}">Supprimer</button></div></div>`).join('')||'<p class="m">Aucun livre.</p>';
+  $('#au').oninput=e=>{p.author=e.target.value;touch(p)};$('#rn').oninput=e=>{p.real=e.target.value;touch(p)};$('#bi').oninput=e=>{p.bio=e.target.value;touch(p)};$('#vd').oninput=e=>{p.videos=e.target.value;touch(p)};importUI($('#imp0'),p,null);$('#addb').onclick=()=>{const t=$('#nb').value.trim()||'Nouveau livre';p.books.push({id:uid(),title:t,seasons:[{id:uid(),title:'Saison 1',chapters:[]}]});touch(p);render()};
+  a.querySelectorAll('[data-o]').forEach(b=>b.onclick=()=>go({v:'book',p:p.id,b:b.dataset.o}));
+  a.querySelectorAll('[data-x]').forEach(b=>b.onclick=()=>two(b,()=>{p.books=p.books.filter(x=>x.id!==b.dataset.x);touch(p);render()}));
+}
+if(view.v==='book'){const p=P(),b=B();$('#ttl').textContent=b.title;
+  const tot=b.seasons.flatMap(s=>s.chapters),w=tot.reduce((n,c)=>n+cw(c),0);
+  a.innerHTML=`<div class="row"><input id="bt" value="${esc(b.title)}" aria-label="Titre du livre"><button id="rd">📖 Lire le livre</button></div><p class="m">${w} mots · ${tot.filter(c=>c.status>=4).length}/${tot.length} chapitre(s) validés ou publiés</p>`+
+  b.seasons.map(s=>`<div class="sea"><div class="row"><input data-st="${s.id}" value="${esc(s.title)}" aria-label="Titre de la saison"><button class="g" data-su="${s.id}">↑</button><button class="g" data-sd="${s.id}">↓</button><button class="g" data-sx="${s.id}">Supprimer</button></div>
+  <div class="row"><input data-nc="${s.id}" placeholder="Titre du chapitre"><button data-ac="${s.id}">+ Chapitre</button></div>
+  ${s.chapters.map((c,i)=>`<div class="card"><h3>${i+1}. ${esc(c.title)}</h3><div class="m">${c.pages.length} page(s) · ${cw(c)} mots · <span class="tag">${ST[c.status]}</span></div><div class="row"><button data-e="${c.id}">Écrire</button><button class="g" data-cu="${s.id}|${c.id}">↑</button><button class="g" data-cd="${s.id}|${c.id}">↓</button><button class="g" data-cx="${s.id}|${c.id}">Supprimer</button></div></div>`).join('')}</div>`).join('')+
+  `<div class="row"><input id="ns" placeholder="Titre de la nouvelle saison"><button id="as" class="g">+ Saison</button></div><div id="bkt"></div><div id="pub"></div><div id="shr"></div>`;
+  const S_=id=>b.seasons.find(s=>s.id===id),ch=(v)=>{const[s,c]=v.split('|');return[S_(s),c]};
+  shareInit(p,b);pubInit(p,b);bookTools(p,b);$('#bt').oninput=e=>{b.title=e.target.value;touch(p)};$('#rd').onclick=()=>go({v:'read',p:p.id,b:b.id});
+  $('#as').onclick=()=>{const t=$('#ns').value.trim()||'Saison '+(b.seasons.length+1);b.seasons.push({id:uid(),title:t,chapters:[]});touch(p);render()};
+  a.querySelectorAll('[data-st]').forEach(i=>i.oninput=()=>{S_(i.dataset.st).title=i.value;touch(p)});
+  a.querySelectorAll('[data-su]').forEach(x=>x.onclick=()=>{mv(b.seasons,x.dataset.su,-1);touch(p);render()});
+  a.querySelectorAll('[data-sd]').forEach(x=>x.onclick=()=>{mv(b.seasons,x.dataset.sd,1);touch(p);render()});
+  a.querySelectorAll('[data-sx]').forEach(x=>x.onclick=()=>two(x,()=>{b.seasons=b.seasons.filter(s=>s.id!==x.dataset.sx);touch(p);render()}));
+  a.querySelectorAll('[data-ac]').forEach(x=>x.onclick=()=>{const s=S_(x.dataset.ac),i=a.querySelector(`[data-nc="${s.id}"]`).value.trim();s.chapters.push({id:uid(),title:i||'Chapitre '+(s.chapters.length+1),status:0,pages:[{id:uid(),text:''}]});touch(p);render()});
+  a.querySelectorAll('[data-e]').forEach(x=>x.onclick=()=>{undo=null;find='';go({v:'edit',p:p.id,b:b.id,c:x.dataset.e,g:0})});
+  a.querySelectorAll('[data-cu]').forEach(x=>x.onclick=()=>{const[s,c]=ch(x.dataset.cu);mv(s.chapters,c,-1);touch(p);render()});
+  a.querySelectorAll('[data-cd]').forEach(x=>x.onclick=()=>{const[s,c]=ch(x.dataset.cd);mv(s.chapters,c,1);touch(p);render()});
+  a.querySelectorAll('[data-cx]').forEach(x=>x.onclick=()=>two(x,()=>{const[s,c]=ch(x.dataset.cx);s.chapters=s.chapters.filter(k=>k.id!==c);touch(p);render()}));
+}
+if(view.v==='edit'){const p=P(),c=findCh(),g=Math.min(view.g,c.pages.length-1),pg=c.pages[g];$('#ttl').textContent='Écriture';
+  a.innerHTML=`<div class="row"><input id="ct" value="${esc(c.title)}" aria-label="Titre du chapitre"><select id="cs">${ST.map((s,i)=>`<option value="${i}" ${i==c.status?'selected':''}>${s}</option>`).join('')}</select></div>
+  <div class="row"><button class="g" id="pp">◀</button><b>Page ${g+1} / ${c.pages.length}</b><button class="g" id="pn">▶</button><button class="g" id="pa">+ Page</button><button class="g" id="px">Supprimer la page</button></div>
+  <div class="row"><input id="f" placeholder="Rechercher (tout le chapitre)" value="${esc(find)}"><input id="r" placeholder="Remplacer par"><button class="g" id="ra">Tout remplacer</button><button class="g" id="ru" ${undo?'':'hidden'}>Annuler</button></div><div class="m" id="fc"></div>
+  <textarea class="ed" id="tx" placeholder="Écrivez, collez ou dictez…">${esc(pg.text)}</textarea>
+  <div class="row"><button id="mic" class="g">🎤 Dicter</button><span class="m" id="wc"></span><span class="m" id="sv">${sync}</span></div>`;
+  const tx=$('#tx'),cnt=()=>$('#wc').textContent=words(tx.value)+' mots (page) · '+cw(c)+' (chapitre)',rx=()=>{const f=$('#f').value;return f?new RegExp(f.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi'):null};cnt();
+  tx.oninput=()=>{pg.text=tx.value;cnt();p.updated=Date.now();dirty.add(p.id);clearTimeout(window._t);window._t=setTimeout(save,500)};
+  $('#ct').oninput=e=>{c.title=e.target.value;touch(p)};$('#cs').onchange=e=>{c.status=+e.target.value;touch(p)};
+  const nav=n=>{if(mic)mic.stop();go({...view,g:n})};
+  $('#pp').onclick=()=>g>0&&nav(g-1);$('#pn').onclick=()=>g<c.pages.length-1&&nav(g+1);
+  $('#pa').onclick=()=>{c.pages.splice(g+1,0,{id:uid(),text:''});touch(p);nav(g+1)};
+  $('#px').onclick=()=>two($('#px'),()=>{if(c.pages.length>1){c.pages.splice(g,1);touch(p);nav(Math.max(0,g-1))}else{pg.text='';touch(p);render()}});
+  const fc=()=>{const r=rx();find=$('#f').value;$('#fc').textContent=r?c.pages.reduce((n,k)=>n+(k.text.match(r)||[]).length,0)+' occurrence(s) dans le chapitre (casse ignorée)':''};$('#f').oninput=fc;fc();
+  $('#ra').onclick=()=>{const r=rx();if(!r)return;const n=c.pages.reduce((n,k)=>n+(k.text.match(r)||[]).length,0);if(!n)return;
+    if($('#ra').dataset.s!=n){$('#ra').dataset.s=n;$('#ra').textContent='Confirmer ('+n+')';return}
+    undo=c.pages.map(k=>k.text);c.pages.forEach(k=>k.text=k.text.replace(r,()=>$('#r').value));touch(p);render()};
+  $('#ru').onclick=()=>{c.pages.forEach((k,i)=>{if(undo[i]!==undefined)k.text=undo[i]});undo=null;touch(p);render()};
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  $('#mic').onclick=()=>{if(!SR){$('#wc').textContent='Dictée non prise en charge par ce navigateur (elle peut utiliser un service en ligne).';return}
+    if(mic){mic.stop();return}mic=new SR();mic.lang='fr-FR';mic.continuous=true;
+    mic.onresult=e=>{for(let i=e.resultIndex;i<e.results.length;i++)if(e.results[i].isFinal){tx.value+=(tx.value&&!/\s$/.test(tx.value)?' ':'')+e.results[i][0].transcript.trim();tx.oninput()}};
+    mic.onend=()=>{mic=null;const m=$('#mic');if(m)m.textContent='🎤 Dicter'};mic.onerror=()=>{};mic.start();$('#mic').textContent='⏹ Arrêter'};
+}
+if(view.v==='read')readView(a,B(),P().author||'');
+if(view.v==='shared')sharedView(a);
+}
+const stopA=()=>{if(window.MEOREADER)MEOREADER.stop()};
+function speak(parts){const m=$('#cm');if(!window.speechSynthesis){if(m)m.textContent='Lecture audio non prise en charge ici.';return}MEOREADER.speakTexts(parts,{title:$('#ttl').textContent,book:'MEO',author:''})}
+function readView(a,b,author){$('#ttl').textContent=b.title;
+  const pt=(t,c,gi)=>t.split(/\n+/).filter(x=>x.trim()).map((x,n)=>`<p data-c="${c}" data-p="${gi}.${n}">${esc(x)}</p>`).join(''),bt=c=>c.pages.map(g=>g.text).join('\n');
+  a.innerHTML=`<div class="row"><button id="lb">🔊 Écouter le livre</button><button class="g" id="ps" aria-label="Pause">⏸</button><button class="g" id="rs" aria-label="Reprendre">▶</button><button class="g" id="st" aria-label="Arrêter">⏹</button><button class="g" id="vx">⚙ Voix</button><select id="rt" aria-label="Vitesse">${[.8,1,1.2,1.5].map(r=>`<option value="${r}" ${r==MEOREADER.get().rate?'selected':''}>×${r}</option>`).join('')}</select></div>
+  <div class="row"><button class="g" id="sm">A−</button><button class="g" id="lg">A+</button><button class="g" id="md">${mode==='cont'?'Mode pages':'Mode continu'}</button><button class="g" id="cp">Copier</button><button class="g" id="dt">⬇ TXT</button><button class="g" id="dw">⬇ Word</button><span class="m" id="cm"></span></div>
+  <div class="book ${mode==='pg'?'pg':''}" style="font-size:${S.size}px"><h2 style="font-size:3rem">${esc(b.title)}</h2>${author?`<p class="m" style="text-align:center;text-indent:0">par ${esc(author)}</p>`:''}`+
+  b.seasons.map(s=>`<h2>${esc(s.title)} <button class="g" data-ls="${s.id}" aria-label="Écouter la saison">🔊</button></h2>`+s.chapters.map(c=>`<h3>${esc(c.title)} <button class="g" data-lc="${c.id}" aria-label="Écouter le chapitre">🔊</button></h3>`+(mode==='pg'?c.pages.map((g,i)=>`<div class="sheet">${pt(g.text,c.id,i)}<div class="n">${i+1}</div></div>`).join(''):c.pages.map((g,i)=>pt(g.text,c.id,i)).join(''))).join('')).join('')+`</div>`;
+  const all=b.seasons.flatMap(s=>s.chapters);
+  $('#lb').onclick=()=>speak([b.title,author?'par '+author:'',...b.seasons.flatMap(s=>[s.title,...s.chapters.flatMap(c=>[c.title,bt(c)])])]);
+  a.querySelectorAll('[data-ls]').forEach(x=>x.onclick=()=>{const s=b.seasons.find(k=>k.id===x.dataset.ls);speak([s.title,...s.chapters.flatMap(c=>[c.title,bt(c)])])});
+  a.querySelectorAll('[data-lc]').forEach(x=>x.onclick=()=>{const c=all.find(k=>k.id===x.dataset.lc);speak([c.title,bt(c)])});
+  $('#ps').onclick=()=>MEOREADER.pause();$('#rs').onclick=()=>MEOREADER.resume();$('#st').onclick=stopA;$('#rt').onchange=e=>MEOREADER.set({rate:+e.target.value});$('#vx').onclick=()=>MEOREADER.settings();
+  $('#sm').onclick=()=>{S.size=Math.max(12,S.size-2);save();render()};$('#lg').onclick=()=>{S.size=Math.min(34,S.size+2);save();render()};
+  $('#md').onclick=()=>{mode=mode==='cont'?'pg':'cont';render()};
+  $('#dt').onclick=()=>dl(slugify(b.title)+'.txt','text/plain;charset=utf-8',b.title+(author?'\nde '+author:'')+'\n\n'+b.seasons.map(s=>s.title+'\n\n'+s.chapters.map(c=>c.title+'\n\n'+bt(c)).join('\n\n\n')).join('\n\n\n\n'));$('#dw').onclick=()=>dl(slugify(b.title)+'.doc','application/msword','<html><head><meta charset="utf-8"></head><body><h1>'+esc(b.title)+'</h1>'+b.seasons.map(s=>'<h1>'+esc(s.title)+'</h1>'+s.chapters.map(c=>'<h2>'+esc(c.title)+'</h2>'+bt(c).split(/\n+/).filter(x=>x.trim()).map(x=>'<p>'+esc(x)+'</p>').join('')).join('')).join('')+'</body></html>');MEOBM.init(b.id,{label:c=>(all.find(k=>k.id===c)||{}).title||''});$('#cp').onclick=async()=>{try{await navigator.clipboard.writeText(b.seasons.map(s=>s.title+'\n\n'+s.chapters.map(c=>c.title+'\n\n'+bt(c)).join('\n\n\n')).join('\n\n\n\n'));$('#cm').textContent='Copié.'}catch(e){$('#cm').textContent='Copie impossible.'}}}
+async function sharedView(a){$('#ttl').textContent='MEO';
+  if(view.d){readView(a,view.d.book,view.d.author||'');return}
+  a.innerHTML='<p class="m">Chargement…</p>';
+  if(!sb){a.innerHTML='<p>Lien indisponible : Supabase n’est pas configuré sur ce site.</p>';return}
+  const{data,error}=await sb.rpc('get_shared',{t:view.t});
+  if(error){a.innerHTML='<p>'+esc(error.message)+'</p>';return}
+  if(!data){a.innerHTML='<p>Ce lien est invalide, expiré ou révoqué.</p>';return}
+  if(data.denied){a.innerHTML=user?`<div class="card"><p>Ce livre est privé et votre compte (${esc(user.email)}) n’est pas invité.</p><button id="lo2">Changer de compte</button></div>`:`<div class="card"><p>Ce livre est privé. Connectez-vous avec l’adresse e-mail invitée.</p><div class="row"><input id="em" type="email" placeholder="E-mail"><input id="pw" type="password" placeholder="Mot de passe"></div><div class="row"><button id="li">Connexion</button><button class="g" id="su">Créer un compte</button></div><div class="m" id="am"></div></div>`;
+    if($('#lo2'))$('#lo2').onclick=()=>sb.auth.signOut();
+    const au=async k=>{const e=$('#em').value.trim(),p=$('#pw').value;const r=k?await sb.auth.signUp({email:e,password:p}):await sb.auth.signInWithPassword({email:e,password:p});$('#am').textContent=r.error?r.error.message:(k&&!r.data.session?'Confirmez votre e-mail, puis connectez-vous.':'')};
+    if($('#li')){$('#li').onclick=()=>au(0);$('#su').onclick=()=>au(1)}return}
+  view.d=data;readView(a,data.book,data.author||'')}
+async function shareInit(p,b){const el=$('#shr');if(!el)return;
+  if(!sb){el.innerHTML='<div class="card m">Le partage demande Supabase (voir config.js).</div>';return}
+  if(!user){el.innerHTML='<div class="card m">Connectez-vous (page d’accueil) pour partager ce livre.</div>';return}
+  el.innerHTML=`<div class="card"><h3>Partager ce livre (lecture seule)</h3><div class="row"><select id="sa"><option value="public">Public : toute personne avec le lien</option><option value="private">Privé : seulement les e-mails invités</option></select></div><div class="row"><input id="se" placeholder="E-mails invités, séparés par des virgules" hidden><input id="sx" type="number" min="1" placeholder="Expire dans (jours, facultatif)"></div><div class="row"><button id="sc">Créer le lien</button></div><div class="m" id="sm2"></div><div id="sl"></div></div>`;
+  $('#sa').onchange=()=>{$('#se').hidden=$('#sa').value!=='private'};
+  const list=async()=>{const{data,error}=await sb.from('shares').select('*').eq('book_id',b.id).order('created_at',{ascending:false});
+    $('#sl').innerHTML=error?esc(error.message):(data||[]).map(s=>`<div class="row"><span class="m">${s.revoked?'Révoqué':s.access==='private'?'Privé : '+esc((s.emails||[]).join(', ')):'Public'}</span>${s.revoked?'':`<button class="g" data-cp="${s.token}">Copier le lien</button><button class="g" data-rv="${s.token}">Révoquer</button>`}</div>`).join('');
+    $('#sl').querySelectorAll('[data-cp]').forEach(x=>x.onclick=async()=>{const u=location.origin+'/ecrire/?s='+x.dataset.cp;try{await navigator.clipboard.writeText(u);x.textContent='Copié'}catch(e){x.textContent=u}});
+    $('#sl').querySelectorAll('[data-rv]').forEach(x=>x.onclick=async()=>{await sb.from('shares').update({revoked:true}).eq('token',x.dataset.rv);list()})};
+  $('#sc').onclick=async()=>{const acc=$('#sa').value,em=$('#se').value.split(',').map(x=>x.trim().toLowerCase()).filter(Boolean);
+    if(acc==='private'&&!em.length){$('#sm2').textContent='Indiquez au moins un e-mail.';return}
+    $('#sm2').textContent='Enregistrement…';dirty.add(p.id);await push();
+    const d=+$('#sx').value,tk=[...crypto.getRandomValues(new Uint8Array(18))].map(x=>x.toString(16).padStart(2,'0')).join('');
+    const{error}=await sb.from('shares').insert({token:tk,project_id:p.id,book_id:b.id,access:acc,emails:em,expires_at:d>0?new Date(Date.now()+d*864e5).toISOString():null});
+    $('#sm2').textContent=error?error.message:'Lien créé.';list()};
+  list()}
+const slugify=s=>String(s).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'x';
+function coverImg(file,cb){const i=new Image(),u=URL.createObjectURL(file);i.onload=()=>{const w=480,h=Math.round(i.height*w/i.width),c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(i,0,0,w,h);URL.revokeObjectURL(u);cb(c.toDataURL('image/jpeg',.8))};i.src=u}
+const lib=src=>new Promise((ok,ko)=>{if(document.querySelector(`script[src="${src}"]`))return ok();const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=()=>ko(new Error('Bibliothèque de lecture indisponible (connexion ?)'));document.head.appendChild(s)});
+const NUMW='(?:\\d{1,3}|[ivxlc]{1,7}|premier|première|un|une|deux|trois|quatre|cinq|six|sept|huit|neuf|dix|onze|douze|treize|quatorze|quinze|seize|vingt|trente)';
+const HEAD=new RegExp('^\\s*(?:(?:chapitre|chapter|partie|part|livre|acte|épisode|episode|tome|saison)\\s*'+NUMW+'\\b.{0,70}|(?:prologue|épilogue|epilogue|préface|avant-propos|postface|introduction|conclusion|remerciements)\\b.{0,40})\\s*$','i');
+const isHead=l=>{l=String(l).trim();return l.length>0&&l.length<90&&HEAD.test(l)};
+function buildPdfText(pages){const N=pages.length,cnt={},key=l=>l.toLowerCase().replace(/\d+/g,'#');
+  pages.forEach(p=>new Set(p.filter(l=>!isHead(l)).map(key)).forEach(k=>cnt[k]=(cnt[k]||0)+1));
+  const lim=Math.max(3,Math.ceil(N*.4)),noise=l=>N>=4&&l.length<80&&cnt[key(l)]>=lim;
+  let out='',lastHead='';
+  pages.forEach(p=>p.forEach(l=>{
+    if(isHead(l)){if(l.toLowerCase()===lastHead)return;lastHead=l.toLowerCase();out+='\n\n'+l+'\n\n';return}
+    if(noise(l))return;
+    out+=l+'\n'}));
+  return out.replace(/(\w)-\n(\w)/g,'$1$2').replace(/([^.!?…»”"\n:])\n(?!\n|[—–«“-])/g,'$1 ')}
+async function extract(f){const n=f.name.toLowerCase();
+  if(n.endsWith('.pdf')){const B='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/';await lib(B+'pdf.min.js');pdfjsLib.GlobalWorkerOptions.workerSrc=B+'pdf.worker.min.js';
+    const d=await pdfjsLib.getDocument({data:await f.arrayBuffer()}).promise,pages=[];
+    for(let i=1;i<=d.numPages;i++){const t=await(await d.getPage(i)).getTextContent();let y=null,line='';const lines=[];
+      t.items.forEach(it=>{const yy=it.transform[5];if(y!==null&&Math.abs(yy-y)>2){lines.push(line);line=''}line+=it.str;y=yy;if(it.hasEOL){lines.push(line);line='';y=null}});lines.push(line);
+      pages.push(lines.map(x=>x.replace(/\s+/g,' ').trim()).filter(Boolean))}
+    const out=buildPdfText(pages);
+    if(out.trim().length<50)throw new Error('aucun texte trouvé : ce PDF est probablement un scan (image). Il faut d’abord le convertir en texte (OCR).');
+    return out}
+  if(n.endsWith('.docx')){await lib('https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js');return(await mammoth.extractRawText({arrayBuffer:await f.arrayBuffer()})).value}
+  return f.text()}
+function splitBy(t,test){const out=[];let cur=null;
+  t.replace(/\r/g,'').split('\n').forEach(l=>{if(test(l)){cur={title:l.trim().replace(/\s+/g,' '),lines:[]};out.push(cur)}else{if(!cur){if(!l.trim())return;cur={title:'Début',lines:[]};out.push(cur)}cur.lines.push(l)}});
+  return out.map(c=>({title:c.title,text:c.lines.join('\n').replace(/\n{3,}/g,'\n\n').trim()})).filter(c=>c.text||c.title!=='Début')}
+function splitChapters(t,fb,word){let r;
+  if(word&&word.trim()){const w=word.trim().toLowerCase();r=splitBy(t,l=>{const x=l.trim().toLowerCase();return x.length<90&&x.startsWith(w)})}
+  else{r=splitBy(t,isHead);
+    if(r.filter(c=>c.title!=='Début').length<2){const num=l=>/^\s*\d{1,3}\s*[.)]?\s*$/.test(l),ns=t.split('\n').filter(num).map(l=>parseInt(l));
+      if(ns.length>=3&&ns.every((v,i)=>i===0||v===ns[i-1]+1))r=splitBy(t,num)}}
+  if(r.length>1&&r[0].title==='Début'&&words(r[0].text)<30)r.shift();
+  return r.length?r:[{title:fb,text:t.trim()}]}
+function bySize(t,n){const P=t.split(/\n+/).filter(x=>x.trim()),out=[];let cur=[],c=0;
+  P.forEach(x=>{cur.push(x);c+=words(x);if(c>=n){out.push({title:'Partie '+(out.length+1),text:cur.join('\n')});cur=[];c=0}});
+  if(cur.length)out.push({title:'Partie '+(out.length+1),text:cur.join('\n')});return out}
+function paginate(t){const out=[];let cur='';t.split(/\n+/).filter(x=>x.trim()).forEach(x=>{if(cur&&(cur+x).length>2200){out.push(cur);cur=''}cur+=(cur?'\n':'')+x});if(cur)out.push(cur);return out.length?out:['']}
+function dl(name,mime,txt){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([txt],{type:mime}));a.download=name;document.body.appendChild(a);a.click();a.remove()}
+let lastWord='';
+function importUI(el,p,b){if(!el)return;
+  el.innerHTML=`<div class="row"><label class="m">Importer un manuscrit (PDF, DOCX, TXT) : <input id="fi" type="file" accept=".pdf,.docx,.txt,.md"></label></div><div id="ip" class="m"></div>`;
+  const q=s=>el.querySelector(s);
+  q('#fi').onchange=async e=>{const f=e.target.files[0];if(!f)return;const ip=q('#ip');ip.textContent='Lecture du fichier…';
+    try{const name=f.name.replace(/\.[^.]+$/,''),t=await extract(f);let chs=splitChapters(t,name);
+      const show=()=>{ip.innerHTML=`<b>${chs.length} chapitre(s) détecté(s)</b>, ${words(t)} mots :<div style="max-height:200px;overflow:auto;margin:.4rem 0">${chs.map((c,i)=>`<div>${i+1}. ${esc(c.title)} <span class="m">(${words(c.text)} mots)</span></div>`).join('')}</div>
+        <div class="m">Le découpage n’est pas bon ? Indiquez le mot par lequel commencent vos titres, ou découpez par tailles égales.</div>
+        <div class="row"><input id="iw" placeholder="Ex : Chapitre, Partie, Acte" value="${esc(lastWord)}"><button class="g" id="ir">Redécouper</button><button class="g" id="is">Par tailles égales</button></div>
+        <div class="row"><button id="ic">${b?'Ajouter comme nouvelle saison':'Créer un nouveau livre'}</button><button class="g" id="in">Annuler</button></div>`;
+        q('#ir').onclick=()=>{lastWord=q('#iw').value;chs=splitChapters(t,name,lastWord);show()};
+        q('#is').onclick=()=>{chs=bySize(t,3000);show()};
+        q('#in').onclick=()=>importUI(el,p,b);
+        q('#ic').onclick=()=>{const cs=chs.map(c=>({id:uid(),title:c.title,status:1,pages:paginate(c.text).map(x=>({id:uid(),text:x}))}));
+          if(b)b.seasons.push({id:uid(),title:'Import : '+name,chapters:cs});else p.books.push({id:uid(),title:name,seasons:[{id:uid(),title:'Saison 1',chapters:cs}]});
+          touch(p);render()}};
+      show()
+    }catch(err){ip.textContent='Import impossible : '+(err.message||err)}}}
+function bookTools(p,b){const el=$('#bkt');if(!el)return;
+  el.innerHTML=`<div class="card"><h3>Fiche du livre</h3><textarea id="sy" placeholder="Résumé (affiché sur la page publique)" style="width:100%;min-height:90px">${esc(b.summary||'')}</textarea><div class="row"><label class="m">Type : <select id="bkd"><option value="roman">Roman</option><option value="nouvelle">Nouvelle</option><option value="poeme">Poème</option><option value="pensee">Pensée</option></select></label></div><div class="row"><label class="m">Couverture : <input id="cv" type="file" accept="image/*"></label>${b.cover?`<img src="${b.cover}" alt="Couverture" style="height:70px;border-radius:6px"><button class="g" id="cx">Retirer</button>`:''}</div><div id="imp"></div></div>`;
+  $('#sy').oninput=e=>{b.summary=e.target.value;touch(p)};$('#bkd').value=b.kind||'roman';$('#bkd').onchange=e=>{b.kind=e.target.value;touch(p)};
+  $('#cv').onchange=e=>{const f=e.target.files[0];if(f)coverImg(f,d=>{b.cover=d;touch(p);bookTools(p,b)})};
+  if($('#cx'))$('#cx').onclick=()=>{delete b.cover;touch(p);bookTools(p,b)};
+  importUI($('#imp'),p,b)}
+async function pubInit(p,b){const el=$('#pub');if(!el)return;
+  if(!sb||!user){el.innerHTML='<div class="card m">Publication publique : connectez-vous (page d’accueil) avec Supabase configuré.</div>';return}
+  const n=b.seasons.flatMap(s=>s.chapters).filter(c=>c.status===5).length;
+  const{data:row}=await sb.from('published_books').select('slug,published,updated_at').eq('id',b.id).maybeSingle();
+  const url=row&&row.published?location.origin+'/livre/'+row.slug+'/':'';
+  el.innerHTML=`<div class="card"><h3>Publication publique</h3><p class="m">Seuls les chapitres au statut « Publié » (${n} actuellement) sont mis en ligne ; les brouillons restent privés. Le nom d’artiste (page du projet) est obligatoire.</p>${row?`<p class="m">État : ${row.published?'publié':'dépublié'}${url?` — <a href="${url}" target="_blank" rel="noopener">${url}</a>`:''}</p>`:''}<div class="row"><button id="pb">${row?'Mettre à jour la publication':'Publier'}</button>${row&&row.published?'<button class="g" id="pu">Dépublier</button>':''}<button class="g" id="ph">🚀 Mettre le site à jour</button></div><div class="m" id="pm">« Publier » enregistre ; « Mettre le site à jour » lance 1 déploiement (limité en offre gratuite : groupez vos publications).</div></div>`;
+  const m=$('#pm');
+  $('#pb').onclick=async()=>{if(!(p.author||'').trim()){m.textContent='Renseignez d’abord votre nom d’artiste (page du projet).';return}
+    if(!n){m.textContent='Aucun chapitre au statut « Publié ».';return}
+    m.textContent='Publication…';dirty.add(p.id);await push();
+    const snap={seasons:b.seasons.map(s=>({title:s.title,chapters:s.chapters.filter(c=>c.status===5).map(c=>({title:c.title,text:c.pages.map(g=>g.text).join('\n')}))})).filter(s=>s.chapters.length)};
+    const base={id:b.id,project_id:p.id,title:b.title,author_name:p.author.trim(),author_slug:slugify(p.author),real_name:(p.real||'').trim()||null,bio:(p.bio||'').trim()||null,summary:(b.summary||'').trim()||null,cover_b64:b.cover||null,data:{...snap,kind:b.kind||'roman',videos:(p.videos||'').trim()},published:true,updated_at:new Date().toISOString()};
+    let sl=row?row.slug:slugify(b.title),r=await sb.from('published_books').upsert({...base,slug:sl},{onConflict:'id'});
+    if(r.error&&r.error.code==='23505'&&!row){sl+='-'+uid().slice(0,4);r=await sb.from('published_books').upsert({...base,slug:sl},{onConflict:'id'})}
+    if(r.error){m.textContent='Erreur : '+r.error.message;return}
+    await pubInit(p,b);$('#pm').textContent='Publication enregistrée. Cliquez « Mettre le site à jour » pour qu’elle apparaisse sur le web.'};
+  if($('#pu'))$('#pu').onclick=async()=>{const r=await sb.from('published_books').update({published:false,updated_at:new Date().toISOString()}).eq('id',b.id);
+    if(r.error){m.textContent='Erreur : '+r.error.message;return}await pubInit(p,b);$('#pm').textContent='Dépublié. Cliquez « Mettre le site à jour » pour retirer les pages du web.'};
+  $('#ph').onclick=async()=>{m.textContent='Demande de mise à jour…';
+    try{const{data}=await sb.auth.getSession();const r=await fetch('/api/publish-hook',{method:'POST',headers:{Authorization:'Bearer '+data.session.access_token}});const j=await r.json().catch(()=>({}));
+      m.textContent=r.ok?'Mise à jour lancée : le site sera à jour dans 1 à 2 minutes.':'Échec : '+(j.error||r.status)}catch(e){m.textContent='Échec : '+e.message}}}
+if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));
+addEventListener('keydown',e=>{if(e.key!=='Escape')return;const t=e.target;if(t&&/INPUT|TEXTAREA|SELECT/.test(t.tagName)){t.blur();return}if(!$('#bk').hidden){if(window.MEOREADER&&MEOREADER.closeSettings())return;$('#bk').click()}});
+const sp=new URLSearchParams(location.search).get('s');if(sp)view={v:'shared',t:sp};
+render();
+</script>
+</body>
+</html>
