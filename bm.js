@@ -5,7 +5,7 @@ function ps(){return[].slice.call(document.querySelectorAll('p[data-p]'))}
 function cur(){var a=ps();for(var i=0;i<a.length;i++)if(a[i].getBoundingClientRect().bottom>90)return a[i];return a[0]}
 function find(c,p){return ps().filter(function(e){return e.dataset.c===c&&e.dataset.p===p})[0]}
 function lab(c){return o.title||(o.label&&o.label(c))||''}
-function jump(c,p){var e=find(c,p);if(e){e.scrollIntoView({block:'start'});e.classList.add('meobm-f');setTimeout(function(){e.classList.remove('meobm-f')},1800);if(pan)pan.hidden=true}else if(o.pub)location.href='/livre/'+K+'/'+c+'/#p'+p}
+function jump(c,p){var e=find(c,p);if(e){e.scrollIntoView({block:'start'});e.classList.add('meobm-f');setTimeout(function(){e.classList.remove('meobm-f')},1800);if(pan)pan.hidden=true}else if(o.url)location.href=o.url(c,p);else if(o.pub)location.href='/livre/'+K+'/'+c+'/#p'+p}
 function mk(t,x,f){var e=document.createElement(t);if(x)e.textContent=x;if(f)e.onclick=f;return e}
 function draw(){pan.innerHTML='';var d=ld();pan.appendChild(mk('b','Marque-pages'));
  if(d.last)pan.appendChild(mk('button','▶ Reprendre : '+(d.last.t||'dernière lecture'),function(){jump(d.last.c,d.last.p)}));

@@ -135,13 +135,13 @@ if(view.v==='book'){const p=P(),b=B();$('#ttl').textContent=b.title;
 }
 if(view.v==='edit'){const p=P(),c=findCh(),g=Math.min(view.g,c.pages.length-1),pg=c.pages[g];$('#ttl').textContent='Écriture';
   a.innerHTML=`<div class="row"><input id="ct" value="${esc(c.title)}" aria-label="Titre du chapitre"><select id="cs">${ST.map((s,i)=>`<option value="${i}" ${i==c.status?'selected':''}>${s}</option>`).join('')}</select></div>
-  <div class="row"><button class="g" id="pp">◀</button><b>Page ${g+1} / ${c.pages.length}</b><button class="g" id="pn">▶</button><button class="g" id="pa">+ Page</button><button class="g" id="px">Supprimer la page</button></div>
+  <div class="row"><input id="cg" placeholder="Avec (invité ou coauteur de ce chapitre, facultatif)" value="${esc(c.guest||'')}" aria-label="Invité ou coauteur"></div><div class="row"><button class="g" id="pp">◀</button><b>Page ${g+1} / ${c.pages.length}</b><button class="g" id="pn">▶</button><button class="g" id="pa">+ Page</button><button class="g" id="px">Supprimer la page</button></div>
   <div class="row"><input id="f" placeholder="Rechercher (tout le chapitre)" value="${esc(find)}"><input id="r" placeholder="Remplacer par"><button class="g" id="ra">Tout remplacer</button><button class="g" id="ru" ${undo?'':'hidden'}>Annuler</button></div><div class="m" id="fc"></div>
   <textarea class="ed" id="tx" placeholder="Écrivez, collez ou dictez…">${esc(pg.text)}</textarea>
   <div class="row"><button id="mic" class="g">🎤 Dicter</button><span class="m" id="wc"></span><span class="m" id="sv">${sync}</span></div>`;
   const tx=$('#tx'),cnt=()=>$('#wc').textContent=words(tx.value)+' mots (page) · '+cw(c)+' (chapitre)',rx=()=>{const f=$('#f').value;return f?new RegExp(f.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi'):null};cnt();
   tx.oninput=()=>{pg.text=tx.value;cnt();p.updated=Date.now();dirty.add(p.id);clearTimeout(window._t);window._t=setTimeout(save,500)};
-  $('#ct').oninput=e=>{c.title=e.target.value;touch(p)};$('#cs').onchange=e=>{c.status=+e.target.value;touch(p)};
+  $('#ct').oninput=e=>{c.title=e.target.value;touch(p)};$('#cg').oninput=e=>{c.guest=e.target.value;touch(p)};$('#cs').onchange=e=>{c.status=+e.target.value;touch(p)};
   const nav=n=>{if(mic)mic.stop();go({...view,g:n})};
   $('#pp').onclick=()=>g>0&&nav(g-1);$('#pn').onclick=()=>g<c.pages.length-1&&nav(g+1);
   $('#pa').onclick=()=>{c.pages.splice(g+1,0,{id:uid(),text:''});touch(p);nav(g+1)};
@@ -273,20 +273,24 @@ async function pubInit(p,b){const el=$('#pub');if(!el)return;
   if(!sb||!user){el.innerHTML='<div class="card m">Publication publique : connectez-vous (page d’accueil) avec Supabase configuré.</div>';return}
   const n=b.seasons.flatMap(s=>s.chapters).filter(c=>c.status===5).length;
   const{data:row}=await sb.from('published_books').select('slug,published,updated_at').eq('id',b.id).maybeSingle();
-  const url=row&&row.published?location.origin+'/livre/'+row.slug+'/':'';
-  el.innerHTML=`<div class="card"><h3>Publication publique</h3><p class="m">Seuls les chapitres au statut « Publié » (${n} actuellement) sont mis en ligne ; les brouillons restent privés. Le nom d’artiste (page du projet) est obligatoire.</p>${row?`<p class="m">État : ${row.published?'publié':'dépublié'}${url?` — <a href="${url}" target="_blank" rel="noopener">${url}</a>`:''}</p>`:''}<div class="row"><button id="pb">${row?'Mettre à jour la publication':'Publier'}</button>${row&&row.published?'<button class="g" id="pu">Dépublier</button>':''}<button class="g" id="ph">🚀 Mettre le site à jour</button></div><div class="m" id="pm">« Publier » enregistre ; « Mettre le site à jour » lance 1 déploiement (limité en offre gratuite : groupez vos publications).</div></div>`;
-  const m=$('#pm');
+  const url=row&&row.published?location.origin+'/livre/'+row.slug+'/':'',lien=row&&row.published?location.origin+'/lire/?livre='+encodeURIComponent(row.slug):'';
+  el.innerHTML=`<div class="card"><h3>Publication publique</h3><p class="m">Seuls les chapitres au statut « Publié » (${n} actuellement) sont mis en ligne ; les brouillons restent privés. Le nom d’artiste (page du projet) est obligatoire.</p><div class="row"><button class="g" id="ca">Tout cocher</button><button class="g" id="cn">Tout décocher</button></div>${b.seasons.map(s=>s.chapters.map(c=>`<label style="display:flex;gap:.5rem;align-items:center;min-height:44px"><input type="checkbox" data-pc="${c.id}" ${c.status===5?'checked':''}> <span>${esc(s.title)} — ${esc(c.title)}</span></label>`).join('')).join('')}${row?`<p class="m">État : ${row.published?'publié':'dépublié'}${lien?`<br>Lecture immédiate (visible tout de suite) : <a href="${lien}" target="_blank" rel="noopener">${lien}</a>`:''}${url?`<br>Page référencée (après « Mettre le site à jour ») : <a href="${url}" target="_blank" rel="noopener">${url}</a>`:''}</p>`:''}<div class="row"><button id="pb">${row?'Mettre à jour la publication':'Publier'}</button>${row&&row.published?'<button class="g" id="pu">Dépublier</button>':''}<button class="g" id="ph">🚀 Mettre le site à jour</button></div><div class="m" id="pm">« Publier » enregistre ; « Mettre le site à jour » lance 1 déploiement (limité en offre gratuite : groupez vos publications).</div></div>`;
+  const m=$('#pm'),chs=b.seasons.flatMap(s=>s.chapters);
+  const setPub=(c,on)=>{if(on&&c.status!==5){c.stBefore=c.status;c.status=5}else if(!on&&c.status===5){c.status=(c.stBefore!==undefined&&c.stBefore!==5)?c.stBefore:3}};
+  el.querySelectorAll('[data-pc]').forEach(x=>x.onchange=()=>{setPub(chs.find(c=>c.id===x.dataset.pc),x.checked);touch(p);m.textContent='Sélection modifiée : cliquez sur « '+$('#pb').textContent+' » pour l’enregistrer.'});
+  $('#ca').onclick=()=>{chs.forEach(c=>setPub(c,true));touch(p);pubInit(p,b)};
+  $('#cn').onclick=()=>{chs.forEach(c=>setPub(c,false));touch(p);pubInit(p,b)};
   $('#pb').onclick=async()=>{if(!(p.author||'').trim()){m.textContent='Renseignez d’abord votre nom d’artiste (page du projet).';return}
-    if(!n){m.textContent='Aucun chapitre au statut « Publié ».';return}
+    if(!chs.some(c=>c.status===5)){m.textContent='Cochez au moins un chapitre à publier.';return}
     m.textContent='Publication…';dirty.add(p.id);await push();
-    const snap={seasons:b.seasons.map(s=>({title:s.title,chapters:s.chapters.filter(c=>c.status===5).map(c=>({title:c.title,text:c.pages.map(g=>g.text).join('\n')}))})).filter(s=>s.chapters.length)};
+    const snap={seasons:b.seasons.map(s=>({title:s.title,chapters:s.chapters.filter(c=>c.status===5).map(c=>({title:c.title,guest:(c.guest||'').trim(),text:c.pages.map(g=>g.text).join('\n')}))})).filter(s=>s.chapters.length)};
     const base={id:b.id,project_id:p.id,title:b.title,author_name:p.author.trim(),author_slug:slugify(p.author),real_name:(p.real||'').trim()||null,bio:(p.bio||'').trim()||null,summary:(b.summary||'').trim()||null,cover_b64:b.cover||null,data:{...snap,kind:b.kind||'roman',videos:(p.videos||'').trim()},published:true,updated_at:new Date().toISOString()};
     let sl=row?row.slug:slugify(b.title),r=await sb.from('published_books').upsert({...base,slug:sl},{onConflict:'id'});
     if(r.error&&r.error.code==='23505'&&!row){sl+='-'+uid().slice(0,4);r=await sb.from('published_books').upsert({...base,slug:sl},{onConflict:'id'})}
     if(r.error){m.textContent='Erreur : '+r.error.message;return}
-    await pubInit(p,b);$('#pm').textContent='Publication enregistrée. Cliquez « Mettre le site à jour » pour qu’elle apparaisse sur le web.'};
+    await pubInit(p,b);$('#pm').textContent='Publié : c’est visible tout de suite via le lien de lecture immédiate. « Mettre le site à jour » ne sert qu’à la page référencée par Google (groupez vos publications).'};
   if($('#pu'))$('#pu').onclick=async()=>{const r=await sb.from('published_books').update({published:false,updated_at:new Date().toISOString()}).eq('id',b.id);
-    if(r.error){m.textContent='Erreur : '+r.error.message;return}await pubInit(p,b);$('#pm').textContent='Dépublié. Cliquez « Mettre le site à jour » pour retirer les pages du web.'};
+    if(r.error){m.textContent='Erreur : '+r.error.message;return}await pubInit(p,b);$('#pm').textContent='Dépublié : la lecture immédiate est retirée tout de suite ; les pages référencées disparaîtront au prochain « Mettre le site à jour ».'};
   $('#ph').onclick=async()=>{m.textContent='Demande de mise à jour…';
     try{const{data}=await sb.auth.getSession();const r=await fetch('/api/publish-hook',{method:'POST',headers:{Authorization:'Bearer '+data.session.access_token}});const j=await r.json().catch(()=>({}));
       m.textContent=r.ok?'Mise à jour lancée : le site sera à jour dans 1 à 2 minutes.':'Échec : '+(j.error||r.status)}catch(e){m.textContent='Échec : '+e.message}}}
